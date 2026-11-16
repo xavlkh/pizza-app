@@ -1,43 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import pizzaData from "./data.js";
 import "./index.css";
+import pizzaData from "./data.js";
 
-const pizzaList = pizzaData.map((pizza, i) => (
-  <li key={"pizza_" + i}>
-    {pizza}
-    {console.log({ ...pizza })}
-  </li>
-));
-
-function Header() {
-  return <h1 className=''>Andy's Pizza Co.</h1>;
-}
-
-function Pizza() {
+const pizzaSource = pizzaData.map((pizza) => {
   return (
-    <div>
-      <img src='pizzas/spinaci.jpg' alt='Spinach Pizza' />
-      <h3>Spinach Pizza</h3>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-      <p>10</p>
+    <div className='pizza'>
+      <img src={pizza.photoName} alt={pizza.name} />
+      <h3>{pizza.name}</h3>
+      <p>{pizza.ingredients}</p>
+      <p>{pizza.price}</p>
     </div>
   );
-}
+});
 
-function Menu() {
-  // for (const [key, value] of Object.entries(pizzaData))
-  const pizzaList = pizzaData.map((pizza, i) => (
-    <div>
-      <h3 key={"name_" + i}>{pizza.name}</h3>
-      <h3 key={"ingredients_" + i}>{pizza.ingredients}</h3>
-      <h3 key={"price_" + i}>{pizza.price}</h3>
-      {/* <img key={"photoName_" + i}>{pizza.photoName}</img> */}
-    </div>
-  ));
-}
-
-function Footer() {
+const Footer = () => {
   const hours = new Date().getHours();
   return (
     <footer className='footer'>
@@ -46,18 +23,30 @@ function Footer() {
         : "Sorry we're closed"}
     </footer>
   );
-}
+};
 
-function App() {
+const Menu = () => {
   return (
-    <Pizza />
-    // <div>
-    //   <Header />
-    //   <Pizza />
-    //   <Pizza />
-    // </div>
+    <div className='menu'>
+      <header className='header'>
+        <h1>Andy's Pizza Co.</h1>
+      </header>
+      <h2>Our Menu</h2>
+      <p>Authentic Italian cuisine, all from our stone oven</p>
+      <div className='pizzas'>{pizzaSource}</div>
+      <Footer />
+      <button className='order btn'>Order</button>
+    </div>
   );
-}
+};
+
+const App = () => {
+  return (
+    <div className='container'>
+      <Menu />
+    </div>
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
